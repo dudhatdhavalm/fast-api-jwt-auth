@@ -1,11 +1,19 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from api.dependencies import get_db
 from config.security import verify_password
-from config.setting import get_settings
-from schemas.auth import LoginSchema, RegisterSchema
+from config.setting import setting
+from schemas.auth import LoginSchema
 from sqlalchemy.orm import Session
-from datetime import datetime, timedelta, date
-from services.user_service import create_access_token, create_user, get_user_by_email
+from datetime import timedelta, date
+from config.security import create_access_token
+from custom_errors.http_errors.http_base_error import (
+    NotFoundError,
+    CustomError,
+    ConflictError,
+    AutherizationError,
+)
+from models.user import User
+import crud
 
 router = APIRouter()
 
@@ -15,52 +23,54 @@ def login(login_schema: LoginSchema, db: Session = Depends(get_db)):
     """
     Pass username and password it will return the jwt token
     """
-    existing_users = get_user_by_email(db, login_schema.email)
-    if len(existing_users) == 0:
-        raise HTTPException(
-            status_code=(status.HTTP_404_NOT_FOUND), detail="User does not exist."
+    user: User = crud.user.get_by_email(db, email=login_schema.email.lower())
+    if not user:
+        raise NotFoundError(
+            [
+                CustomError(
+                    error_loc=["not_found", "user"],
+                    error_object=Exception(
+                        "User Does Not Exist Please Reach Out To Admin"
+                    ),
+                )
+            ]
         )
-    user = existing_users[0]
     is_password_valid = verify_password(login_schema.password, user.password)
     if not is_password_valid:
-        raise HTTPException(
-            status_code=(status.HTTP_409_CONFLICT),
-            detail="Please check username and password.",
+        raise ConflictError(
+            [
+                CustomError(
+                    error_loc=["conflict", "username or password"],
+                    error_object=Exception("Please Check Username or Password"),
+                )
+            ]
         )
-    if not user.is_active:
-        raise HTTPException(
-            status_code=(status.HTTP_401_UNAUTHORIZED),
-            detail="Your account is deactivated.",
+    if user.status != 1:
+        raise AutherizationError(
+            [
+                CustomError(
+                    error_loc=["unautherized"],
+                    error_object=Exception("Account Is Deactivated"),
+                )
+            ]
         )
 
-    is_user_expired = user.expiry_date < date.today()
-    if is_user_expired:
-        raise HTTPException(
-            status_code=(status.HTTP_401_UNAUTHORIZED),
-            detail="Please upgrade your plan.",
-        )
-    claim = {"email": user.email, "id": user.id}
-    setting = get_settings()
+    if not user.is_super_admin:
+        is_user_expired = user.expiry_date < date.today()
+        if is_user_expired:
+            raise AutherizationError(
+                [
+                    CustomError(
+                        error_loc=["unautherized"],
+                        error_object=Exception(
+                            "Plan Is Expired Please Reach Out To Admin"
+                        ),
+                    )
+                ]
+            )
+
+    claim = {"email": user.email, "id": user.id, "is_super_admin": user.is_super_admin}
     token = create_access_token(
         claim, expires_delta=timedelta(minutes=(setting.ACCESS_TOKEN_EXPIRE_MINUTES))
     )
     return {"token": token}
-
-
-@router.post(
-    "/register",
-    response_model=RegisterSchema,
-    response_model_exclude={"password"},
-    status_code=(status.HTTP_201_CREATED),
-)
-def register(register_schema: RegisterSchema, db: Session = Depends(get_db)):
-    """
-    Register new user to system
-    """
-    existing_users = get_user_by_email(db, register_schema.email)
-    if len(existing_users) != 0:
-        raise HTTPException(
-            status_code=(status.HTTP_409_CONFLICT), detail="Email already exist"
-        )
-    user = create_user(db, register_schema)
-    return user

@@ -1,14 +1,13 @@
 from fastapi import status
-from fastapi.responses import JSONResponse
 from starlette.requests import Request
 from starlette.middleware.base import BaseHTTPMiddleware
-from db.database import SessionLocal
-from services.user_service import decode_access_token, get_user_by_email_active
 from custom_errors.http_errors.http_base_error import AutherizationError, CustomError
+import crud
+from config.security import decode_access_token
 
 
 class AuthMiddleWare(BaseHTTPMiddleware):
-    allow_urls = ["/api/v1/auth/login", "/register", "/"]
+    allow_urls = ["/api/v1/auth/login", "/docs", "/openapi.json", "/"]
 
     async def dispatch(self, request: Request, call_next):
         current_url = request.url.path
@@ -34,8 +33,8 @@ class AuthMiddleWare(BaseHTTPMiddleware):
                     )
                 ]
             )
-        email = claim.get("email", None)
-        if email == None:
+        user_id = claim.get("id", None)
+        if user_id == None:
             raise AutherizationError(
                 [
                     CustomError(
@@ -47,8 +46,7 @@ class AuthMiddleWare(BaseHTTPMiddleware):
         db = None
 
         try:
-            db = SessionLocal()
-            user = get_user_by_email_active(db, email)
+            user = crud.user.get_by_id(db, user_id)
             if not user:
                 raise AutherizationError(
                     [

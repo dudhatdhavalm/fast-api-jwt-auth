@@ -1,6 +1,6 @@
-
-from db.database import SessionLocal
+from db.session import SessionLocal
 from fastapi import Request
+
 
 def get_db():
     db = SessionLocal()

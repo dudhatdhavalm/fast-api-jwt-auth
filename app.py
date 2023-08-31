@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from api.dependencies import get_current_user
-from config.setting import Setting, get_settings
+from config.setting import setting
 from api.api_v1 import api_v1
-from db.model.user import UserModel
+from models.user import User
 from middlewares.auth_middleware import AuthMiddleWare
 import logging.config
 from pathlib import Path
@@ -98,13 +98,13 @@ app.add_middleware(
 
 
 @root_router.get("/")
-def hello_world(setting: Setting = Depends(get_settings)):
+def hello_world():
     print(setting.APP_NAME)
     return {"message": "Hello World!"}
 
 
 @root_router.get("/get-chart-data")
-def get_chart_data(user: UserModel = Depends(get_current_user)):
+def get_chart_data(user: User = Depends(get_current_user)):
     print("=========================")
     print(user)
     return {
