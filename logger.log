@@ -1,0 +1,99 @@
+"2023-08-31 11:20:14" loglevel=DEBUG  logger=asyncio __init__() L59   Using selector: EpollSelector
+"2023-08-31 11:20:14" loglevel=INFO   logger=uvicorn.error serve() L75   Started server process [35864]
+"2023-08-31 11:20:14" loglevel=INFO   logger=uvicorn.error startup() L45   Waiting for application startup.
+"2023-08-31 11:20:14" loglevel=INFO   logger=uvicorn.error startup() L59   Application startup complete.
+"2023-08-31 11:20:14" loglevel=INFO   logger=uvicorn.error _log_started_message() L206  Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+"2023-08-31 11:20:50" loglevel=INFO   logger=uvicorn.error shutdown() L252  Shutting down
+"2023-08-31 11:20:50" loglevel=INFO   logger=uvicorn.error shutdown() L64   Waiting for application shutdown.
+"2023-08-31 11:20:50" loglevel=INFO   logger=uvicorn.error shutdown() L75   Application shutdown complete.
+"2023-08-31 11:20:50" loglevel=INFO   logger=uvicorn.error serve() L85   Finished server process [35864]
+"2023-08-31 11:20:59" loglevel=DEBUG  logger=asyncio __init__() L59   Using selector: EpollSelector
+"2023-08-31 11:20:59" loglevel=INFO   logger=uvicorn.error serve() L75   Started server process [36326]
+"2023-08-31 11:20:59" loglevel=INFO   logger=uvicorn.error startup() L45   Waiting for application startup.
+"2023-08-31 11:20:59" loglevel=INFO   logger=uvicorn.error startup() L59   Application startup complete.
+"2023-08-31 11:20:59" loglevel=INFO   logger=uvicorn.error _log_started_message() L206  Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+"2023-08-31 11:23:23" loglevel=INFO   logger=uvicorn.error shutdown() L252  Shutting down
+"2023-08-31 11:23:23" loglevel=INFO   logger=uvicorn.error shutdown() L64   Waiting for application shutdown.
+"2023-08-31 11:23:23" loglevel=INFO   logger=uvicorn.error shutdown() L75   Application shutdown complete.
+"2023-08-31 11:23:23" loglevel=INFO   logger=uvicorn.error serve() L85   Finished server process [36326]
+"2023-08-31 11:23:25" loglevel=DEBUG  logger=asyncio __init__() L59   Using selector: EpollSelector
+"2023-08-31 11:23:25" loglevel=INFO   logger=uvicorn.error serve() L75   Started server process [37429]
+"2023-08-31 11:23:25" loglevel=INFO   logger=uvicorn.error startup() L45   Waiting for application startup.
+"2023-08-31 11:23:25" loglevel=INFO   logger=uvicorn.error startup() L59   Application startup complete.
+"2023-08-31 11:23:25" loglevel=INFO   logger=uvicorn.error _log_started_message() L206  Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+"2023-08-31 11:25:41" loglevel=INFO   logger=uvicorn.error shutdown() L252  Shutting down
+"2023-08-31 11:25:41" loglevel=INFO   logger=uvicorn.error shutdown() L64   Waiting for application shutdown.
+"2023-08-31 11:25:41" loglevel=INFO   logger=uvicorn.error shutdown() L75   Application shutdown complete.
+"2023-08-31 11:25:41" loglevel=INFO   logger=uvicorn.error serve() L85   Finished server process [37429]
+"2023-08-31 11:25:45" loglevel=DEBUG  logger=asyncio __init__() L59   Using selector: EpollSelector
+"2023-08-31 11:25:45" loglevel=INFO   logger=uvicorn.error serve() L75   Started server process [37711]
+"2023-08-31 11:25:45" loglevel=INFO   logger=uvicorn.error startup() L45   Waiting for application startup.
+"2023-08-31 11:25:45" loglevel=INFO   logger=uvicorn.error startup() L59   Application startup complete.
+"2023-08-31 11:25:45" loglevel=INFO   logger=uvicorn.error _log_started_message() L206  Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+"2023-08-31 11:25:49" loglevel=ERROR  logger=uvicorn.error run_asgi() L369  Exception in ASGI application
+Traceback (most recent call last):
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/starlette/middleware/base.py", line 41, in call_next
+    message = await recv_stream.receive()
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/anyio/streams/memory.py", line 81, in receive
+    return self.receive_nowait()
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/anyio/streams/memory.py", line 74, in receive_nowait
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/app.py", line 32, in catch_exceptions_middleware
+    return await call_next(request)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/starlette/middleware/base.py", line 44, in call_next
+    raise app_exc
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/starlette/middleware/base.py", line 34, in coro
+    await self.app(scope, request.receive, send_stream.send)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/starlette/middleware/base.py", line 63, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/middlewares/auth_middleware.py", line 19, in dispatch
+    raise AutherizationError(
+custom_errors.http_errors.http_base_error.AutherizationError: 1 validation error for Authorization
+['unautherized']
+  authentication header missing (type=value_error.exception)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/uvicorn/protocols/http/h11_impl.py", line 366, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 75, in __call__
+    return await self.app(scope, receive, send)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/fastapi/applications.py", line 261, in __call__
+    await super().__call__(scope, receive, send)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/starlette/middleware/errors.py", line 181, in __call__
+    raise exc
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/starlette/middleware/errors.py", line 159, in __call__
+    await self.app(scope, receive, _send)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/env/lib/python3.10/site-packages/starlette/middleware/base.py", line 63, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "/mnt/BA504CE3504CA7C9/Work/React Native/Workplace/fast-api-jwt-auth/app.py", line 34, in catch_exceptions_middleware
+    ex_type, ex, tb = sys.exc_info()
+NameError: name 'sys' is not defined
+"2023-08-31 11:26:19" loglevel=INFO   logger=uvicorn.error shutdown() L252  Shutting down
+"2023-08-31 11:26:19" loglevel=INFO   logger=uvicorn.error shutdown() L64   Waiting for application shutdown.
+"2023-08-31 11:26:19" loglevel=INFO   logger=uvicorn.error shutdown() L75   Application shutdown complete.
+"2023-08-31 11:26:19" loglevel=INFO   logger=uvicorn.error serve() L85   Finished server process [37711]
+"2023-08-31 11:26:54" loglevel=DEBUG  logger=asyncio __init__() L59   Using selector: EpollSelector
+"2023-08-31 11:26:54" loglevel=INFO   logger=uvicorn.error serve() L75   Started server process [37910]
+"2023-08-31 11:26:54" loglevel=INFO   logger=uvicorn.error startup() L45   Waiting for application startup.
+"2023-08-31 11:26:54" loglevel=INFO   logger=uvicorn.error startup() L59   Application startup complete.
+"2023-08-31 11:26:54" loglevel=INFO   logger=uvicorn.error _log_started_message() L206  Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+"2023-08-31 11:29:27" loglevel=INFO   logger=uvicorn.error shutdown() L252  Shutting down
+"2023-08-31 11:29:27" loglevel=INFO   logger=uvicorn.error shutdown() L64   Waiting for application shutdown.
+"2023-08-31 11:29:27" loglevel=INFO   logger=uvicorn.error shutdown() L75   Application shutdown complete.
+"2023-08-31 11:29:27" loglevel=INFO   logger=uvicorn.error serve() L85   Finished server process [37910]
+"2023-08-31 11:29:31" loglevel=DEBUG  logger=asyncio __init__() L59   Using selector: EpollSelector
+"2023-08-31 11:29:31" loglevel=INFO   logger=uvicorn.error serve() L75   Started server process [38081]
+"2023-08-31 11:29:31" loglevel=INFO   logger=uvicorn.error startup() L45   Waiting for application startup.
+"2023-08-31 11:29:31" loglevel=INFO   logger=uvicorn.error startup() L59   Application startup complete.
+"2023-08-31 11:29:31" loglevel=INFO   logger=uvicorn.error _log_started_message() L206  Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
